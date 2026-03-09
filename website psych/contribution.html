@@ -5,103 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Make a Contribution</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        .contribution-section {
-            margin: 30px 0;
-        }
-        .preset-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        button.confirm {
-            background-color: #008CBA;
-            margin-top: 20px;
-            width: 100%;
-        }
-        .custom-amount {
-            margin: 20px 0;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="range"] {
-            width: 100%;
-            margin: 10px 0;
-        }
-        .amount-display {
-            font-size: 18px;
-            font-weight: bold;
-            color: #008CBA;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="app-bg">
-    <h1>Make a Contribution</h1>
-    <div id="recipientBanner" style="display:none; background:#ffe4e1; padding:10px; margin-bottom:15px; border:1px solid #ff7f7f;">
-        <strong>You are contributing for: </strong><span id="recipientName"></span>
+<body class="bg-gradient-to-br from-pink-50 to-teal-50 app-bg">
+
+<nav class="bg-pink-600 text-white p-4 flex justify-between items-center shadow-lg">
+    <div class="font-bold text-xl">PsychoFlow</div>
+    <div class="space-x-4 flex">
+        <a href="index.html" class="hover:bg-pink-700 px-3 py-2 rounded">Dashboard</a>
+        <a href="contribution.html" class="hover:bg-pink-700 px-3 py-2 rounded">Contribute</a>
+        <a href="statistics.html" class="hover:bg-pink-700 px-3 py-2 rounded">Statistics</a>
+        <a href="luna.html" class="hover:bg-pink-700 px-3 py-2 rounded">Luna AI</a>
+        <a href="login.html" class="hover:bg-pink-700 px-3 py-2 rounded">Logout</a>
+    </div>
+</nav>
+
+<div class="max-w-2xl mx-auto p-8">
+    <h1 class="text-4xl font-bold text-pink-600 mb-8">Make a Contribution</h1>
+
+    <div id="recipientBanner" style="display:none;" class="bg-red-50 border-l-4 border-red-600 p-4 mb-6 rounded text-gray-800">
+        <strong>You are contributing for: </strong><span id="recipientName" class="font-semibold"></span>
     </div>
     
-    <div class="contribution-section">
-        <label for="currencySelect">Currency:</label>
-        <select id="currencySelect" onchange="updatePresetLabels();" class="mb-4 p-2 border rounded">
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+        <label for="currencySelect" class="block font-semibold text-gray-700 mb-3">Currency:</label>
+        <select id="currencySelect" onchange="updatePresetLabels();" class="w-full p-3 border rounded-lg mb-6">
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>
             <option value="KES">KES</option>
             <option value="GBP">GBP</option>
         </select>
-    </div>
 
-    <div class="contribution-section">
-        <h2>Select a Preset Amount:</h2>
-        <div id="presetButtons" class="preset-buttons">
-            <button onclick="selectAmount(5, '1 Month')" data-amount="5" data-label="1 Month">5 – 1 Month</button>
-            <button onclick="selectAmount(15, '3 Months')" data-amount="15" data-label="3 Months">15 – 3 Months</button>
-            <button onclick="selectAmount(50, '1 Year')" data-amount="50" data-label="1 Year">50 – 1 Year</button>
+        <h2 class="text-2xl font-bold text-pink-600 mb-4">Select a Preset Amount:</h2>
+        <div id="presetButtons" class="flex gap-3 mb-6 flex-wrap">
+            <button onclick="selectAmount(5, '1 Month')" data-amount="5" data-label="1 Month" class="bg-pink-600 text-white px-4 py-3 rounded-lg hover:bg-pink-700">5 – 1 Month</button>
+            <button onclick="selectAmount(15, '3 Months')" data-amount="15" data-label="3 Months" class="bg-pink-600 text-white px-4 py-3 rounded-lg hover:bg-pink-700">15 – 3 Months</button>
+            <button onclick="selectAmount(50, '1 Year')" data-amount="50" data-label="1 Year" class="bg-pink-600 text-white px-4 py-3 rounded-lg hover:bg-pink-700">50 – 1 Year</button>
         </div>
-    </div>
 
-    <div class="contribution-section custom-amount">
-        <h2>Or Enter a Custom Amount:</h2>
-        <label for="donationAmount">Donation Amount: <span id="amountDisplay">5</span> <span id="currencyDisplay">USD</span></label>
+        <h2 class="text-2xl font-bold text-pink-600 mb-4">Or Enter a Custom Amount:</h2>
+        <label for="donationAmount" class="block font-semibold text-gray-700 mb-3">Donation Amount: <span id="amountDisplay" class="text-pink-600">5</span> <span id="currencyDisplay" class="text-pink-600">USD</span></label>
         <input type="number" id="donationAmount" min="1" step="0.01" value="5"
-               class="w-full mb-4 p-2 border rounded"
+               class="w-full mb-6 p-3 border rounded-lg"
                oninput="updateAmount(this.value)" placeholder="Enter amount">
-    </div>
 
-    <div class="contribution-section">
-        <label for="paymentMethod">Payment Method:</label>
-        <select id="paymentMethod" class="mb-4 p-2 border rounded" onchange="showPaymentFields()">
+        <label for="paymentMethod" class="block font-semibold text-gray-700 mb-3">Payment Method:</label>
+        <select id="paymentMethod" class="w-full p-3 border rounded-lg mb-6" onchange="showPaymentFields()">
             <option value="mpesa">MPESA (Push STK)</option>
             <option value="paypal">PayPal</option>
             <option value="bank">Bank Transfer</option>
         </select>
+
+        <div id="paymentDetails" class="mb-6"></div>
+
+        <button class="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 font-semibold" onclick="confirmDonation()" id="payButton">Pay Now</button>
     </div>
-
-    <div id="paymentDetails" class="contribution-section"></div>
-
-    <button class="confirm" onclick="confirmDonation()" id="payButton">Pay Now</button>
+</div>
 
     <script>
         const currencySymbols = {
@@ -141,14 +100,14 @@
             const container = document.getElementById('paymentDetails');
             container.innerHTML = '';
             if (method === 'mpesa') {
-                container.innerHTML = `<label for="phone">Phone Number (MPESA):</label>
-                    <input type="tel" id="phone" placeholder="2547XXXXXXXX" class="w-full mb-4 p-2 border rounded" required>`;
+                container.innerHTML = `<label for="phone" class="block font-semibold text-gray-700 mb-2">Phone Number (MPESA):</label>
+                    <input type="tel" id="phone" placeholder="2547XXXXXXXX" class="w-full p-3 border rounded-lg" required>`;
             } else if (method === 'paypal') {
-                container.innerHTML = `<label for="paypalEmail">PayPal Email:</label>
-                    <input type="email" id="paypalEmail" placeholder="you@example.com" class="w-full mb-4 p-2 border rounded" required>`;
+                container.innerHTML = `<label for="paypalEmail" class="block font-semibold text-gray-700 mb-2">PayPal Email:</label>
+                    <input type="email" id="paypalEmail" placeholder="you@example.com" class="w-full p-3 border rounded-lg" required>`;
             } else if (method === 'bank') {
-                container.innerHTML = `<label for="bankSelect">Select Bank:</label>
-                    <select id="bankSelect" class="w-full mb-4 p-2 border rounded" required>
+                container.innerHTML = `<label for="bankSelect" class="block font-semibold text-gray-700 mb-2">Select Bank:</label>
+                    <select id="bankSelect" class="w-full p-3 border rounded-lg mb-4" required>
                         <optgroup label="Main Kenyan Banks">
                             <option value="equity">Equity Bank</option>
                             <option value="kcb">KCB</option>
@@ -177,8 +136,8 @@
                             <option value="anz">ANZ</option>
                         </optgroup>
                     </select>
-                    <label for="cardNumber">Card/Account Number:</label>
-                    <input type="text" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" class="w-full mb-4 p-2 border rounded" required>`;
+                    <label for="cardNumber" class="block font-semibold text-gray-700 mb-2">Card/Account Number:</label>
+                    <input type="text" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" class="w-full p-3 border rounded-lg" required>`;
             }
         }
 
